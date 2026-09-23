@@ -1,30 +1,54 @@
 #include <iostream>
 using namespace std;
 
-void mostrarArreglo(int numeros[], int n)
+void mostrarArreglo(const int numeros[], int n)
 {
     for (int i = 0; i < n; i++)
     {
         cout << numeros[i] << " ";
     }
-
     cout << endl;
 }
 
 void insertionSort(int numeros[], int n)
 {
+    int comparaciones = 0;
+    int desplazamientos = 0;
+    int inserciones = 0;
+
     for (int i = 1; i < n; i++)
     {
         int clave = numeros[i];
         int j = i - 1;
 
-        while (j >= 0 && numeros[j] > clave)
+        cout << "\nInsertando: " << clave << endl;
+        inserciones++;
+
+        while (j >= 0)
         {
-            numeros[j + 1] = numeros[j];
-            j--;
+            comparaciones++;
+            if (numeros[j] > clave)
+            {
+                numeros[j + 1] = numeros[j];
+                desplazamientos++;
+                j--;
+            }
+            else
+            {
+                break;
+            }
         }
         numeros[j + 1] = clave;
+
+        mostrarArreglo(numeros, n);
     }
+
+    cout << "\n========================================" << endl;
+    cout << "       ESTADISTICAS" << endl;
+    cout << "========================================" << endl;
+    cout << "Comparaciones: " << comparaciones << endl;
+    cout << "Desplazamientos: " << desplazamientos << endl;
+    cout << "Inserciones: " << inserciones << endl;
 }
 
 int main()
@@ -36,9 +60,6 @@ int main()
     mostrarArreglo(numeros, n);
 
     insertionSort(numeros, n);
-
-    cout << "\nArreglo ordenado:" << endl;
-    mostrarArreglo(numeros, n);
 
     return 0;
 }
